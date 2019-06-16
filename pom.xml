@@ -45,5 +45,54 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>${project.deploy.name}</finalName>
+        <resources>
+            <!-- 设置对auto-config.properties，jdbc.properties进行过虑，即这些文件中的${key}会被替换掉为真正的值 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--<includes>
+                    <include>auto-config.properties</include>
+                    <include>jdbc.properties</include>
+                </includes>-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <project.deploy.name>config-server</project.deploy.name>
+                <profile.name>dev</profile.name>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <project.deploy.name>config-server</project.deploy.name>
+                <profile.name>test</profile.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>prd</id>
+            <properties>
+                <project.deploy.name>config-server</project.deploy.name>
+                <profile.name>prd</profile.name>
+            </properties>
+        </profile>
+    </profiles>
+
 
 </project>

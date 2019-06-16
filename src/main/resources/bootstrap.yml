@@ -9,8 +9,10 @@ management:
         include: ["health","prometheus"]
 spring:
   application:
-    name: personal-project-config
+    name: @project.deploy.name@
   nodeId: ${nodeId:1}
+  profiles:
+    active: @profile.name@
   cloud:
     config:
       server:
