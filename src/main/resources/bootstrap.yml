@@ -1,0 +1,35 @@
+server:
+  port: 30001
+  servlet:
+    context-path: /
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health","prometheus"]
+spring:
+  application:
+    name: personal-project-config
+  nodeId: ${nodeId:1}
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/741978260/personal-project-config-repo.git
+          search-paths: /config-repo
+          username: 741978260
+          password: cai19910809LIN
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        heartbeat:
+          enabled: true
+          ttlValue: 5
+        preferIpAddress: true
+        enabled: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        query-passing: true
+        register: true
+        service-name: ${spring.application.name}
+        health-check-tls-skip-verify: true
