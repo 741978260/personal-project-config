@@ -7,6 +7,11 @@ management:
     web:
       exposure:
         include: ["health","prometheus"]
+
+#加密配置
+encrypt:
+  key: MumuHslikkjj
+
 spring:
   application:
     name: @project.deploy.name@
@@ -18,12 +23,10 @@ spring:
       server:
         git:
           uri: https://github.com/741978260/personal-project-config-repo.git
-          search-paths: /config-repo
+          search-paths: /common,/{application}-config
           username: 741978260
           password: cai19910809LIN
     consul:
-      host: localhost
-      port: 8500
       discovery:
         heartbeat:
           enabled: true
@@ -35,3 +38,36 @@ spring:
         register: true
         service-name: ${spring.application.name}
         health-check-tls-skip-verify: true
+
+#显示debug日志信息
+debug: false
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      label: dev
+    consul:
+      host: 127.0.0.1
+      port: 8500
+
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      label: dev
+    consul:
+      host: 127.0.0.1
+      port: 8500
+
+---
+spring:
+  profiles: prd
+  cloud:
+    config:
+      label: dev
+    consul:
+      host: 127.0.0.1
+      port: 8500
